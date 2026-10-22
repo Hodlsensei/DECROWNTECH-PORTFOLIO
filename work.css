@@ -1,0 +1,160 @@
+/* ============================================================
+   work.css — styles specific to work.html (Full Portfolio page)
+   Loaded AFTER style.css, so it inherits the same CSS variables
+   (colors, fonts, spacing) already defined in :root there.
+   ============================================================ */
+
+/* ---------- page header ---------- */
+.work-header{
+  padding-top: 120px;
+  padding-bottom: 48px;
+}
+.work-title{
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.work-lede{
+  max-width: 640px;
+}
+
+/* ---------- work list section ---------- */
+.work-list-section{
+  padding-top: 0;
+}
+
+/* ---------- grid of cards ---------- */
+.work-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+/* ---------- individual work card ---------- */
+.work-card{
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.work-card:hover{
+  border-color: var(--gold-dim);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -16px rgba(0,0,0,0.55);
+}
+
+/* ---------- card image / thumbnail ---------- */
+.work-card-image{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1356 / 567;
+  background: linear-gradient(135deg, #1b2540, #10182c);
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.work-img-fallback{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.work-card-image img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+/* ---------- card body ---------- */
+.work-card-body{
+  padding: 22px 24px 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* ---------- status badge (replaces old plain span) ---------- */
+.work-badge{
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.work-badge svg{ width: 13px; height: 13px; }
+
+.work-badge.client{
+  background: rgba(93, 199, 132, 0.12);
+  color: #6fd897;
+  border: 1px solid rgba(111, 216, 151, 0.3);
+}
+.work-badge.personal{
+  background: rgba(216, 171, 91, 0.12);
+  color: var(--gold);
+  border: 1px solid rgba(216, 171, 91, 0.3);
+}
+.work-badge.progress{
+  background: rgba(154, 163, 178, 0.12);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+.work-badge.demo{
+  background: rgba(154, 163, 178, 0.12);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+
+.work-card-title{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.work-card-desc{
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 18px;
+}
+
+.work-card .project-tags{
+  padding: 0;
+  margin-bottom: 18px;
+}
+.work-card .project-link{
+  margin-top: auto;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.work-cta{
+  margin-top: 12px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 860px){
+  .work-header{ padding-top: 90px; }
+  .work-grid{ grid-template-columns: 1fr; }
+}
