@@ -79,8 +79,8 @@
       <div class="hero-typing mono"><span class="prompt">$</span> <span id="typeTarget"></span><span class="cursor"></span></div>
       <p class="hero-desc">I'm Sanusi Emmanuel Femi, a Full-Stack Developer &amp; Automation Specialist. I build the bots, stores, dashboards and integrations that remove your bottlenecks, for clients across e-commerce, fintech and SaaS.</p>
       <div class="hero-cta">
-        <a href="#projects" class="btn btn-primary">View Projects</a>
-        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        <a href="#projects" class="btn btn-ghost">View Projects</a>
+        <a href="#contact" class="btn btn-primary">Start a Project</a>
       </div>
       <div class="hero-stats">
         <div><div class="hero-stat-num">10+</div><div class="hero-stat-label">Projects Shipped</div></div>
@@ -314,7 +314,7 @@
         <div class="contact-info">
           <div class="contact-info-item">
             <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 6l9 7 9-7"/></svg></div>
-            <div><div class="ci-label mono">Email</div><div class="ci-value">emmanuelfemi000@gmail.com</div></div>
+            <div><div class="ci-label mono">Email</div><div class="ci-value">decrowntechh@gmail.com</div></div>
           </div>
           <div class="contact-info-item">
             <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M2.5 9h19M2.5 15h19M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg></div>
@@ -349,8 +349,9 @@
             <label for="cmessage">Message</label>
             <textarea id="cmessage" name="message" required></textarea>
           </div>
+          <input type="checkbox" name="botcheck" id="botcheck" style="display:none" tabindex="-1" autocomplete="off">
           <button type="submit" class="btn btn-primary">Send Message</button>
-          <div class="form-note">Submitting opens your email client addressed to emmanuelfemi000@gmail.com with your message pre-filled.</div>
+          <div class="form-note" role="status" aria-live="polite">Your message goes straight to Decrown Tech, and I will reply by email.</div>
         </form>
       </div>
     </section>
@@ -367,6 +368,57 @@
 </div>
 
 <script src="script.js"></script>
+<script>
+(function () {
+  var form = document.getElementById('contactForm');
+  if (!form) return;
+  var note = form.querySelector('.form-note');
+  var button = form.querySelector('button[type="submit"]');
+
+  // Capture phase: runs before any older handler and replaces it.
+  document.addEventListener('submit', function (e) {
+    if (e.target !== form) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    var botcheck = document.getElementById('botcheck');
+    if (botcheck && botcheck.checked) return;
+
+    var originalLabel = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Sending...';
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: 'b0783ad1-5aee-477e-b722-640e074f011e',
+        from_name: 'Decrown Tech website',
+        name: document.getElementById('cname').value,
+        email: document.getElementById('cemail').value,
+        subject: document.getElementById('csubject').value,
+        message: document.getElementById('cmessage').value
+      })
+    })
+      .then(function (response) { return response.json(); })
+      .then(function (data) {
+        if (data.success) {
+          form.reset();
+          note.textContent = 'Thank you. Your message has been sent, and I will reply by email soon.';
+        } else {
+          throw new Error(data.message || 'Send failed');
+        }
+      })
+      .catch(function () {
+        note.textContent = 'Sorry, the message could not be sent. Please email decrowntechh@gmail.com directly.';
+      })
+      .finally(function () {
+        button.disabled = false;
+        button.textContent = originalLabel;
+      });
+  }, true);
+})();
+</script>
 
 </body>
 </html>
